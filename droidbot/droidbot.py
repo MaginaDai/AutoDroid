@@ -14,6 +14,8 @@ from .app import App
 from .env_manager import AppEnvManager
 from .input_manager import InputManager
 
+import pdb
+
 
 class DroidBot(object):
     """
@@ -134,6 +136,7 @@ class DroidBot(object):
         if not self.enabled:
             return
         self.logger.info("Starting DroidBot")
+        # pdb.set_trace()
         try:
             if self.timeout > 0:
                 self.timer = Timer(self.timeout, self.stop)

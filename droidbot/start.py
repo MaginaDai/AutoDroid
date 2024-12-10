@@ -94,6 +94,8 @@ def parse_args():
     return options
 
 
+import pdb
+
 def main():
     """
     the main function
@@ -114,7 +116,7 @@ def main():
             start_mode = "worker"
     else:
         start_mode = "normal"
-
+    pdb.set_trace()
     if start_mode == "master":
         droidmaster = DroidMaster(
             app_path=opts.apk_path,

@@ -16,6 +16,8 @@ from .adapter.droidbot_ime import DroidBotIme
 from .app import App
 from .intent import Intent
 
+import pdb
+
 DEFAULT_NUM = '1234567890'
 DEFAULT_CONTENT = 'Hello world!'
 
@@ -813,6 +815,7 @@ class Device(object):
                                         activity_stack=activity_stack,
                                         background_services=background_services,
                                         screenshot_path=screenshot_path)
+            pdb.set_trace()
         except Exception as e:
             self.logger.warning("exception in get_current_state: %s" % e)
             import traceback

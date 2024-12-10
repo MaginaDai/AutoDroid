@@ -2,8 +2,16 @@ import os
 import re
 import hashlib
 import ast
-from openai import OpenAI
+from openai import OpenAI, AzureOpenAI
+import pdb
 ACTION_MISSED = None
+
+TRAPI_END_POINT = 'gcr/shared'
+TRAPI_BASE_URL = 'https://trapi.research.microsoft.com/' + TRAPI_END_POINT
+TRAPI_API_VERSION = '2024-02-01'
+# TRAPI_API_KEY = os.getenv("TRAPI_API_KEY") # contant your mentor for the key
+TRAPI_API_KEY = "cd2caafdcf2e4f3f97474e55bd3d4d0a"
+deployment = 'gpt-35-turbo'
 
 def get_id_from_view_desc(view_desc):
     '''
@@ -57,20 +65,36 @@ def get_view_without_id(view_desc):
 
 def query_gpt(prompt):
     # print(prompt)
-    client = OpenAI(
-        api_key=os.environ['APIKey']
+    client = AzureOpenAI(
+        api_key=TRAPI_API_KEY,
+        api_version=TRAPI_API_VERSION,
+        azure_endpoint=TRAPI_BASE_URL,
+        azure_deployment=deployment
     )
+
     retry = 0
     completion = client.chat.completions.create(
         messages=[
             {
-                "role": "user",
+                "role":"user",
                 "content": prompt,
             }
         ],
-        model="gpt-3.5-turbo",
-        timeout=15
+        model=deployment,
+        timeout=15,
+        logprobs=5,
     )
+    pdb.set_trace()
+    # completion = client.chat.completions.create(
+    #     messages=[
+    #         {
+    #             "role": "user",
+    #             "content": prompt,
+    #         }
+    #     ],
+    #     model="gpt-3.5-turbo",
+    #     timeout=15
+    # )
     res = completion.choices[0].message.content
     return res
 
